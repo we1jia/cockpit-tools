@@ -795,20 +795,12 @@ pub fn start_mixed_model_gateway_watchdog(app: AppHandle) {
                                 &target.profile_dir,
                             )
                             .unwrap_or(false);
-                        if target.codex_running && !profile_is_active {
-                            continue;
-                        }
                         let runtime_healthy =
                             modules::codex_local_access::mixed_model_gateway_runtime_is_healthy(
                                 &target.profile_dir,
                             )
                             .await;
-                        let runtime_managed = target.codex_running
-                            || modules::codex_local_access::mixed_model_gateway_runtime_is_managed(
-                                &target.profile_dir,
-                            )
-                            .await;
-                        if runtime_healthy && runtime_managed {
+                        if profile_is_active && runtime_healthy {
                             consecutive_failures.remove(&profile_key);
                             continue;
                         }
