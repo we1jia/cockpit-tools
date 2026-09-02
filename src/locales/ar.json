@@ -862,6 +862,8 @@
       "cursorPathReset": "إعادة تعيين الافتراضي",
       "codexLaunchOnSwitch": "تشغيل تطبيق Codex App تلقائيًا عند تبديل Codex",
       "codexLaunchOnSwitchDesc": "تشغيل أو إعادة تشغيل تطبيق Codex App تلقائيًا بعد تبديل الحساب",
+      "codexAutoRestoreTakeoverOnLaunch": "استعادة وكيل Codex عند بدء التشغيل",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "عند بدء Cockpit Tools، استعادة Sidecar المفعّل والملفات المرتبطة دون إعادة تشغيل Codex App",
       "autoUpdate": "التحديث التلقائي في الخلفية",
       "autoUpdateDesc": "عند اكتشاف إصدار جديد، يتم التحديث بصمت في الخلفية ثم يُطلب إعادة التشغيل عند الجاهزية.",
       "autoUpdateOff": "إيقاف (تحديث يدوي)",

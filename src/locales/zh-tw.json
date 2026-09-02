@@ -815,6 +815,8 @@
       "cursorPathReset": "重設預設值",
       "codexLaunchOnSwitch": "切換 Codex 時自動啟動 Codex App",
       "codexLaunchOnSwitchDesc": "切換帳號後自動啟動或重新啟動 Codex App",
+      "codexAutoRestoreTakeoverOnLaunch": "啟動時恢復 Codex 代理接管",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Cockpit Tools 啟動時恢復已啟用的 Sidecar 與已綁定 Profile，不重新啟動 Codex App",
       "autoUpdate": "背景自動更新",
       "autoUpdateDesc": "偵測到新版本時，於背景靜默更新；完成後提示重新啟動。",
       "autoUpdateOff": "關閉（手動更新）",

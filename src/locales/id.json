@@ -890,6 +890,8 @@
       "antigravityStartupWakeupDesc": "Jalankan tugas bangun Antigravity IDE yang diaktifkan sekali setelah aplikasi dimulai",
       "codexLaunchOnSwitch": "Luncurkan Aplikasi Codex saat mengganti Codex",
       "codexLaunchOnSwitchDesc": "Mulai atau mulai ulang Aplikasi Codex setelah mengganti akun",
+      "codexAutoRestoreTakeoverOnLaunch": "Pulihkan proxy Codex saat mulai",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Saat Cockpit Tools dimulai, pulihkan Sidecar yang aktif dan profil tertaut tanpa memulai ulang Codex App",
       "autoSwitchAccountScope": "Cakupan penggantian akun otomatis",
       "autoSwitchAccountScopeDesc": "Hanya pantau dan ganti akun dalam cakupan ini.",
       "autoSwitchAccountScopeAll": "Semua akun",

@@ -819,6 +819,8 @@
       "cursorPathReset": "Varsayılana sıfırla",
       "codexLaunchOnSwitch": "Codex değiştirirken Codex App'i otomatik başlat",
       "codexLaunchOnSwitchDesc": "Hesap değişiminden sonra Codex App'i otomatik başlat veya yeniden başlat",
+      "codexAutoRestoreTakeoverOnLaunch": "Başlangıçta Codex proxy bağlantısını geri yükle",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Cockpit Tools başladığında etkin Sidecar'ı ve bağlı profilleri Codex App'i yeniden başlatmadan geri yükle",
       "autoUpdate": "Arka planda otomatik güncelleme",
       "autoUpdateDesc": "Yeni sürüm algılandığında güncelleme arka planda sessizce yapılır ve tamamlandığında yeniden başlatma istenir.",
       "autoUpdateOff": "Kapalı (manuel güncelleme)",

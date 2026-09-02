@@ -1041,6 +1041,8 @@
       "antigravityStartupWakeupDesc": "应用启动后按此策略触发一次已启用的 Antigravity IDE 唤醒任务",
       "codexLaunchOnSwitch": "切换 Codex 时自动启动 Codex App",
       "codexLaunchOnSwitchDesc": "切换账号后自动启动或重启 Codex App",
+      "codexAutoRestoreTakeoverOnLaunch": "启动时恢复 Codex 代理接管",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Cockpit Tools 启动时恢复已启用的 Sidecar 与已绑定 Profile，不重启 Codex App",
       "codexRestartSpecifiedAppOnSwitch": "切换 Codex 时重启指定应用",
       "codexRestartSpecifiedAppOnSwitchDesc": "开启后按下方路径重启指定应用（适用于依赖插件宿主的场景）",
       "codexSpecifiedAppPath": "指定应用启动路径",

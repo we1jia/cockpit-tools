@@ -819,6 +819,8 @@
       "cursorPathReset": "Сбросить по умолчанию",
       "codexLaunchOnSwitch": "Автоматически запускать Codex App при переключении Codex",
       "codexLaunchOnSwitchDesc": "После переключения аккаунта автоматически запускать или перезапускать Codex App",
+      "codexAutoRestoreTakeoverOnLaunch": "Восстанавливать прокси Codex при запуске",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "При запуске Cockpit Tools восстанавливать включённый Sidecar и привязанные профили без перезапуска Codex App",
       "autoUpdate": "Фоновое автообновление",
       "autoUpdateDesc": "При обнаружении новой версии обновление выполняется в фоне, а после завершения предлагается перезапуск.",
       "autoUpdateOff": "Выключено (ручное обновление)",

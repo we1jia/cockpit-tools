@@ -815,6 +815,8 @@
       "cursorPathReset": "Obnovit výchozí",
       "codexLaunchOnSwitch": "Při přepnutí Codex automaticky spustit Codex App",
       "codexLaunchOnSwitchDesc": "Po přepnutí účtu automaticky spustit nebo restartovat Codex App",
+      "codexAutoRestoreTakeoverOnLaunch": "Obnovit proxy Codex při spuštění",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Při spuštění Cockpit Tools obnovit povolený Sidecar a propojené profily bez restartování Codex App",
       "autoUpdate": "Automatické aktualizace na pozadí",
       "autoUpdateDesc": "Při zjištění nové verze proběhne tichá aktualizace na pozadí a po dokončení budete vyzváni k restartu.",
       "autoUpdateOff": "Vypnuto (ruční aktualizace)",

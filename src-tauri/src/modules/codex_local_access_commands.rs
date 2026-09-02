@@ -1395,11 +1395,30 @@ pub async fn set_local_access_enabled(enabled: bool) -> Result<CodexLocalAccessS
 }
 
 pub async fn restore_local_access_gateway() {
-    if let Err(err) = ensure_runtime_loaded_for_app_startup().await {
-        let mut runtime = gateway_runtime().lock().await;
-        runtime.loaded = true;
-        runtime.last_error = Some(err.clone());
-        logger::log_codex_api_warn(&format!("[CodexLocalAccess] 初始化失败: {}", err));
+    let auto_restore_takeover =
+        crate::modules::config::get_user_config().codex_auto_restore_takeover_on_launch;
+    match ensure_runtime_loaded_for_app_startup(auto_restore_takeover).await {
+        Ok(CodexLocalAccessStartupRestorePlan::PreferenceDisabled) => {
+            logger::log_codex_api_info(
+                "[CodexLocalAccess] 启动恢复已关闭，未启动 Sidecar 或修改已绑定 Profile",
+            );
+        }
+        Ok(CodexLocalAccessStartupRestorePlan::ServiceDisabled) => {
+            logger::log_codex_api_info(
+                "[CodexLocalAccess] API 服务未启用，跳过启动恢复",
+            );
+        }
+        Ok(CodexLocalAccessStartupRestorePlan::RestoreTakeover) => {
+            logger::log_codex_api_info(
+                "[CodexLocalAccess] 启动恢复完成：Sidecar 与已绑定 Profile 已恢复，不重启 Codex App",
+            );
+        }
+        Err(err) => {
+            let mut runtime = gateway_runtime().lock().await;
+            runtime.loaded = true;
+            runtime.last_error = Some(err.clone());
+            logger::log_codex_api_warn(&format!("[CodexLocalAccess] 启动恢复失败: {}", err));
+        }
     }
 }
 

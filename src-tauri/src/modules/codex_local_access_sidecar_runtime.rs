@@ -1358,13 +1358,10 @@ async fn ensure_profile_takeover(
     if !collection.enabled {
         return Ok(());
     }
-    if codex_account::profile_mutation_lease_held_by_other_process(profile_dir) {
-        logger::log_codex_api_warn(&format!(
-            "跳过 API Service profile 自动接管：目标目录正由另一个 Cockpit 进程执行凭据事务: profile_dir={}",
-            profile_dir.display()
-        ));
-        return Ok(());
-    }
+    let _lease = codex_account::try_acquire_profile_mutation_lease(
+        profile_dir,
+        "api-service-startup-restore",
+    )?;
 
     let current = inspect_local_access_profile_attachment(profile_dir, Some(collection));
     if current.attached && current.error.is_none() {

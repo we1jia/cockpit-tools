@@ -1903,11 +1903,33 @@ async fn ensure_runtime_loaded() -> Result<(), String> {
     Ok(())
 }
 
-async fn ensure_runtime_loaded_for_app_startup() -> Result<(), String> {
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum CodexLocalAccessStartupRestorePlan {
+    PreferenceDisabled,
+    ServiceDisabled,
+    RestoreTakeover,
+}
+
+fn codex_local_access_startup_restore_plan(
+    auto_restore_takeover: bool,
+    collection_enabled: bool,
+) -> CodexLocalAccessStartupRestorePlan {
+    if !auto_restore_takeover {
+        return CodexLocalAccessStartupRestorePlan::PreferenceDisabled;
+    }
+    if !collection_enabled {
+        return CodexLocalAccessStartupRestorePlan::ServiceDisabled;
+    }
+    CodexLocalAccessStartupRestorePlan::RestoreTakeover
+}
+
+async fn ensure_runtime_loaded_for_app_startup(
+    auto_restore_takeover: bool,
+) -> Result<CodexLocalAccessStartupRestorePlan, String> {
     ensure_runtime_loaded_without_start_with_profile_restore(false).await?;
     ensure_bound_oauth_quota_monitor_started();
 
-    let should_start = {
+    let collection_enabled = {
         let runtime = gateway_runtime().lock().await;
         runtime
             .collection
@@ -1915,25 +1937,21 @@ async fn ensure_runtime_loaded_for_app_startup() -> Result<(), String> {
             .map(|collection| collection.enabled)
             .unwrap_or(false)
     };
+    let plan =
+        codex_local_access_startup_restore_plan(auto_restore_takeover, collection_enabled);
 
-    if should_start {
-        ensure_gateway_matches_runtime().await?;
-        let collection = {
-            let runtime = gateway_runtime().lock().await;
-            runtime.collection.clone()
-        };
-        if let Some(collection) = collection.as_ref() {
-            if local_access_profile_takeovers_need_websocket_sync(collection) {
-                ensure_local_access_profile_takeovers_from_runtime().await?;
-            }
-        }
-        trigger_bound_oauth_quota_refresh_in_background(
-            "API 服务启动恢复",
-            BOUND_OAUTH_QUOTA_RESERVE_REFRESH_INTERVAL,
-        );
+    if plan != CodexLocalAccessStartupRestorePlan::RestoreTakeover {
+        return Ok(plan);
     }
 
-    Ok(())
+    ensure_gateway_matches_runtime().await?;
+    ensure_local_access_profile_takeovers_from_runtime().await?;
+    trigger_bound_oauth_quota_refresh_in_background(
+        "API 服务启动恢复",
+        BOUND_OAUTH_QUOTA_RESERVE_REFRESH_INTERVAL,
+    );
+
+    Ok(plan)
 }
 
 async fn ensure_gateway_matches_runtime() -> Result<(), String> {

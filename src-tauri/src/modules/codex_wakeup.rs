@@ -2972,6 +2972,11 @@ mod tests {
 
     #[test]
     fn version_manager_cli_dirs_include_nvm_node_bins() {
+        let old_nvm_dir = std::env::var_os("NVM_DIR");
+        let old_nvm_bin = std::env::var_os("NVM_BIN");
+        std::env::remove_var("NVM_DIR");
+        std::env::remove_var("NVM_BIN");
+
         let root = std::env::temp_dir().join(format!(
             "codex-wakeup-nvm-{}-{}",
             std::process::id(),
@@ -2995,6 +3000,13 @@ mod tests {
             dirs
         );
         let _ = fs::remove_dir_all(&root);
+
+        if let Some(val) = old_nvm_dir {
+            std::env::set_var("NVM_DIR", val);
+        }
+        if let Some(val) = old_nvm_bin {
+            std::env::set_var("NVM_BIN", val);
+        }
     }
 
     #[cfg(unix)]

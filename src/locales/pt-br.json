@@ -819,6 +819,8 @@
       "cursorPathReset": "Redefinir padrão",
       "codexLaunchOnSwitch": "Iniciar Codex App ao trocar Codex",
       "codexLaunchOnSwitchDesc": "Iniciar ou reiniciar automaticamente o Codex App após trocar de conta",
+      "codexAutoRestoreTakeoverOnLaunch": "Restaurar o proxy do Codex na inicialização",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Ao iniciar o Cockpit Tools, restaure o Sidecar ativado e os perfis vinculados sem reiniciar o Codex App",
       "autoUpdate": "Atualização automática em segundo plano",
       "autoUpdateDesc": "Quando uma nova versão for detectada, a atualização ocorrerá em segundo plano e, ao concluir, será solicitado reinício.",
       "autoUpdateOff": "Desativado (atualização manual)",

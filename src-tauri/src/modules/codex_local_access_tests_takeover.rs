@@ -1,5 +1,42 @@
 // Codex Local Access 测试：Takeover reconciliation, gateway configuration and remaining integration cases。
 // 测试与生产实现共享 super 作用域，验证真实网关、持久化和请求协议行为。
+    #[test]
+    fn startup_restore_requires_preference_and_enabled_service() {
+        use super::CodexLocalAccessStartupRestorePlan;
+
+        assert_eq!(
+            super::codex_local_access_startup_restore_plan(false, true),
+            CodexLocalAccessStartupRestorePlan::PreferenceDisabled
+        );
+        assert_eq!(
+            super::codex_local_access_startup_restore_plan(true, false),
+            CodexLocalAccessStartupRestorePlan::ServiceDisabled
+        );
+        assert_eq!(
+            super::codex_local_access_startup_restore_plan(true, true),
+            CodexLocalAccessStartupRestorePlan::RestoreTakeover
+        );
+    }
+
+    #[tokio::test]
+    async fn ensure_profile_takeover_reports_error_when_lease_is_held() {
+        let profile_dir = make_temp_dir("codex-local-access-lease-conflict-test");
+        let mut collection = test_local_access_collection(Vec::new());
+        collection.enabled = true;
+        collection.api_key = "local-service-key".to_string();
+
+        let _lease = crate::modules::codex_account::try_acquire_profile_mutation_lease(
+            &profile_dir,
+            "external-test-holder",
+        )
+        .expect("acquire lease");
+
+        let err = super::ensure_profile_takeover(&profile_dir, &collection)
+            .await
+            .expect_err("should fail when lease is held");
+        assert!(err.contains("正在操作同一个 Codex profile"));
+    }
+
     #[tokio::test]
     async fn local_access_takeover_writes_a_complete_model_catalog() {
         let profile_dir = make_temp_dir("codex-local-access-model-catalog-test");
@@ -84,7 +121,7 @@
         fs::write(
             profile_dir.join(CODEX_PROFILE_CONFIG_FILE),
             format!(
-                "model_catalog_json = \"{}\"\nmodel = \"{}\"\n",
+                "model_catalog_json = \"{}\"\nmodel = \"{}\"\nmodel_context_window = 1000000\nmodel_auto_compact_token_limit = 900000\n",
                 CODEX_LEGACY_PROVIDER_MODEL_CATALOG_FILE, CODEX_TEST_MODEL_ID
             ),
         )
@@ -103,6 +140,8 @@
             "model_catalog_json = \"{}\"",
             CODEX_PROVIDER_MODEL_CATALOG_FILE
         )));
+        assert!(config.contains("model_context_window = 1000000"));
+        assert!(config.contains("model_auto_compact_token_limit = 900000"));
         assert!(!config.contains("model = "));
         let catalog: Value = serde_json::from_str(
             &fs::read_to_string(profile_dir.join(CODEX_PROVIDER_MODEL_CATALOG_FILE))

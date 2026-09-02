@@ -819,6 +819,8 @@
       "cursorPathReset": "デフォルトにリセット",
       "codexLaunchOnSwitch": "Codex 切替時に Codex App を自動起動",
       "codexLaunchOnSwitchDesc": "アカウント切替後に Codex App を自動で起動または再起動",
+      "codexAutoRestoreTakeoverOnLaunch": "起動時に Codex プロキシ接続を復元",
+      "codexAutoRestoreTakeoverOnLaunchDesc": "Cockpit Tools の起動時に有効な Sidecar と紐付け済み Profile を復元し、Codex App は再起動しません",
       "autoUpdate": "バックグラウンド自動更新",
       "autoUpdateDesc": "新しいバージョンが検出されると、バックグラウンドでサイレント更新し、完了後に再起動を促します。",
       "autoUpdateOff": "オフ（手動更新）",

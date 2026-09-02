@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ---
 ## [Unreleased]
 
+### Fixed
+
+- **Fixed Codex takeover restoration running as two incomplete startup flows**: startup now uses one backend-owned path that respects the restore preference, starts the persisted Sidecar only when API Service remains enabled, and reconciles every bound profile without restarting Codex App. The catalog-only frontend restore and its false-success result have been removed.
+
 ## [1.3.36] - 2026-09-02
 
 ### Added

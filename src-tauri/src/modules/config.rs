@@ -1297,8 +1297,7 @@ impl Default for UserConfig {
             openclaw_auth_overwrite_on_switch: default_openclaw_auth_overwrite_on_switch(),
             hermes_auth_overwrite_on_switch: default_hermes_auth_overwrite_on_switch(),
             codex_launch_on_switch: default_codex_launch_on_switch(),
-            codex_auto_restore_takeover_on_launch:
-                default_codex_auto_restore_takeover_on_launch(),
+            codex_auto_restore_takeover_on_launch: default_codex_auto_restore_takeover_on_launch(),
             antigravity_launch_on_switch: default_antigravity_launch_on_switch(),
             codex_restart_specified_app_on_switch: default_codex_restart_specified_app_on_switch(),
             codex_local_access_entry_visible: default_codex_local_access_entry_visible(),
