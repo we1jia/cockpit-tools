@@ -1360,11 +1360,22 @@ fn write_api_provider_to_config_toml_with_options(
             let provider_table = model_providers[provider_id]
                 .as_table_mut()
                 .ok_or("config.toml 中目标 provider 不是合法表结构")?;
+            let is_local_runtime = provider_id == CODEX_RUNTIME_MODEL_PROVIDER_ID;
+            let existing_requires_openai_auth = provider_table
+                .get("requires_openai_auth")
+                .and_then(|item| item.as_bool())
+                .unwrap_or(false);
             provider_table["name"] = value(provider_name);
             provider_table["base_url"] = value(base_url);
             provider_table["wire_api"] = value(CODEX_PROVIDER_WIRE_API);
-            provider_table["requires_openai_auth"] = value(false);
-            provider_table["supports_websockets"] = value(false);
+            if !is_local_runtime || provider_table.get("requires_openai_auth").is_none() {
+                provider_table["requires_openai_auth"] = value(false);
+            } else {
+                provider_table["requires_openai_auth"] = value(existing_requires_openai_auth);
+            }
+            if provider_table.get("supports_websockets").is_none() {
+                provider_table["supports_websockets"] = value(false);
+            }
         }
     }
 
